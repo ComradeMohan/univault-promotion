@@ -3,21 +3,21 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="icon" href="assets/favicon.png" type="image/png" />
   <title>Univault — Student Dashboard</title>
   <meta name="description" content="Univault: your student dashboard for grades, attendance, notifications and academic records." />
   <meta name="robots" content="index,follow" />
   <meta name="theme-color" content="#0f1724" />
-  <link rel="canonical" href="https://univault.vercel.app/" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Univault" />
   <meta property="og:title" content="Univault — Student Dashboard" />
   <meta property="og:description" content="Grades, attendance, notifications and academic records in one place." />
-  <meta property="og:url" content="https://univault.vercel.app/" />
   <meta property="og:image" content="assets/home.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Univault — Student Dashboard" />
   <meta name="twitter:description" content="Grades, attendance, notifications and academic records in one place." />
   <meta name="twitter:image" content="assets/home.jpg" />
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Univault","applicationCategory":"EducationalApplication","operatingSystem":"Android","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
   <style>
     /* Minimal modern CSS — responsive single-page layout */
     :root{
@@ -107,12 +107,6 @@
 
     footer{margin-top:28px;padding:18px;border-radius:12px;color:var(--muted);display:flex;justify-content:space-between;align-items:center}
 
-    /* signup */
-    #signup .form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    #signup .form .full{grid-column:1 / -1}
-    #signup input, #signup select{width:100%;padding:10px;border-radius:10px;border:1px solid var(--border);background:var(--glass);color:var(--text)}
-    #signup .note{color:var(--muted);font-size:13px}
-
     /* responsive */
     @media (max-width:980px){
       .hero{grid-template-columns:1fr;}
@@ -153,8 +147,6 @@
         <a href="#features">Features</a>
         <a href="#preview">Preview</a>
         <a href="#media">Media</a>
-        <a href="#contact">Contact</a>
-        <a class="cta" href="#signup">Sign Up</a>
       </nav>
     </header>
 
@@ -164,9 +156,9 @@
           <h1>All your student essentials in one place</h1>
           <p>Univault syncs grades, attendance, notifications and calendars from your college portal and displays them in a clean, mobile-friendly dashboard. Export PDFs, sign-in with Google, and get push notifications — designed for students & admins.</p>
 
-          <div class="btn-row">
-            <button class="btn primary">Try Demo</button>
-            <button class="btn">Download PDF</button>
+          <div class="btn-row" aria-hidden="true">
+            <span class="btn primary" style="pointer-events:none;opacity:.6">Try Demo</span>
+            <span class="btn" style="pointer-events:none;opacity:.6">Download PDF</span>
           </div>
 
           <div class="grid" style="margin-top:18px">
@@ -189,11 +181,11 @@
         </div>
 
         <aside class="panel">
-          <h3 style="margin-top:0">Quick Actions</h3>
-          <div style="display:flex;flex-direction:column;gap:8px;margin-top:12px">
-            <button class="btn">Sync Account</button>
-            <button class="btn">Verify Email (OTP)</button>
-            <button class="btn">Sign in with Google</button>
+          <h3 style="margin-top:0">Highlights</h3>
+          <div style="display:flex;flex-direction:column;gap:8px;margin-top:12px" aria-hidden="true">
+            <span class="btn" style="pointer-events:none;opacity:.6">Sync Account</span>
+            <span class="btn" style="pointer-events:none;opacity:.6">Verify Email (OTP)</span>
+            <span class="btn" style="pointer-events:none;opacity:.6">Sign in with Google</span>
           </div>
 
           <div style="margin-top:16px">
@@ -332,15 +324,9 @@
 
       </section>
 
-      <section id="getstarted" style="margin-top:18px">
-        <h2>Get started</h2>
-        <p class="muted">Download Univault on Android and sign in with your college account to start syncing grades, attendance and notifications.</p>
+      <!-- promotional only: removed actionable get started buttons -->
 
-        <div style="display:flex;gap:12px;margin-top:12px;flex-wrap:wrap;align-items:center">
-          <a class="btn primary" href="https://play.google.com/store/apps/details?id=com.simats.univault" target="_blank" rel="noopener">Download on Google Play</a>
-          <a href="#contact" class="btn">Contact Support</a>
-        </div>
-      </section>
+      <!-- signup moved to modal -->
 
       <section id="contact" style="margin-top:28px">
         <h2>Contact & Tech notes</h2>
@@ -371,6 +357,34 @@
     .media-modal img{max-width:100%;max-height:100%;border-radius:8px;box-shadow:0 20px 60px rgba(2,6,23,0.6)}
   .media-modal .close{position:absolute;top:18px;right:18px;background:var(--overlay-strong);border-radius:8px;padding:8px 10px;color:var(--text);cursor:pointer}
 
+    /* signup modal */
+    .signup-overlay{position:fixed;inset:0;background:rgba(2,6,23,0.75);display:none;align-items:center;justify-content:center;padding:18px;z-index:10000;opacity:0;transition:opacity .2s ease}
+    .signup-overlay.open{display:flex;opacity:1}
+    .signup-modal{width:min(640px, 92vw);background:var(--surface);border:1px solid var(--border);border-radius:14px;box-shadow:0 20px 60px rgba(2,6,23,0.7);transform:translateY(6px);opacity:0;transition:opacity .2s ease, transform .2s ease}
+    .signup-overlay.open .signup-modal{opacity:1;transform:translateY(0)}
+    .signup-header{display:flex;justify-content:space-between;align-items:center;padding:16px 18px;border-bottom:1px solid var(--border)}
+    .signup-body{padding:18px}
+    .icon-btn{background:var(--overlay-strong);border:1px solid var(--border);color:var(--text);padding:8px 10px;border-radius:8px;cursor:pointer}
+    /* form controls */
+    .form input, .form select{
+      width:100%;
+      padding:12px 12px;
+      border-radius:10px;
+      border:1px solid var(--border);
+      background:var(--glass);
+      color:var(--text);
+      outline:none;
+      transition:border-color .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .form input::placeholder{color:var(--muted)}
+    .form input:hover, .form select:hover{background:rgba(255,255,255,0.08)}
+    .form input:focus, .form select:focus{
+      border-color:#06b6d4;
+      box-shadow:0 0 0 3px rgba(14,165,233,0.25);
+      background:rgba(255,255,255,0.09);
+    }
+    .form .muted.small{display:block;margin-bottom:6px}
+
     @media (max-width:980px){.gallery{grid-template-columns:repeat(3,1fr)}.gallery-item img{height:120px}}
     @media (max-width:640px){.gallery{grid-template-columns:repeat(2,1fr)}.gallery-item img{height:110px}}
     @media (max-width:420px){.gallery{grid-template-columns:1fr}.gallery-item img{height:220px}}
@@ -380,6 +394,8 @@
     <button class="close" id="modalClose">✕</button>
     <img id="modalImage" src="" alt="" />
   </div>
+
+  <!-- Signup removed for promotional-only version -->
 
   <script>
     // Simple modal for viewing images fullscreen
@@ -429,6 +445,8 @@
       // close nav when a link is clicked (mobile)
       nav && nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => nav.classList.remove('open')));
     })();
+
+    // Signup removed
   </script>
 
   <!--
