@@ -47,7 +47,7 @@
       background: radial-gradient(1000px 400px at 10% 10%, rgba(124,58,237,0.12), transparent),
                   radial-gradient(700px 300px at 90% 90%, rgba(14,165,233,0.06), transparent),
                   var(--bg);
-  color:var(--text);
+    color:var(--text);
       -webkit-font-smoothing:antialiased;
       -moz-osx-font-smoothing:grayscale;
       line-height:1.4;
@@ -62,9 +62,9 @@
     .brand{display:flex;gap:12px;align-items:center}
     .logo{width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 20px rgba(124,58,237,0.12);overflow:hidden;background:transparent}
     .logo img{width:100%;height:100%;object-fit:contain;display:block}
-  nav a{color:var(--muted);text-decoration:none;margin-left:18px;font-weight:600}
-  nav a:focus, nav a:hover{color:var(--text);text-decoration:underline}
-  nav a.cta{background:linear-gradient(90deg,var(--accent),#06b6d4);color:var(--text);padding:10px 14px;border-radius:10px}
+    nav a{color:var(--muted);text-decoration:none;margin-left:18px;font-weight:600}
+    nav a:focus, nav a:hover{color:var(--text);text-decoration:underline}
+    nav a.cta{background:linear-gradient(90deg,var(--accent),#06b6d4);color:var(--text);padding:10px 14px;border-radius:10px}
 
     .hero{
       display:grid;grid-template-columns:1fr 420px;gap:28px;align-items:center;margin-bottom:28px
@@ -73,11 +73,11 @@
     .hero h1{font-size:34px;margin:0 0 8px}
     .hero p{color:var(--muted);margin:0 0 18px}
     .btn-row{display:flex;gap:12px}
-  .btn{padding:10px 14px;border-radius:10px;border:1px solid var(--border);background:var(--glass);cursor:pointer;font-weight:700; color:white;}
-  .btn.primary{background:linear-gradient(90deg,var(--accent),#06b6d4);color:var(--text);border:none}
+    .btn{padding:10px 14px;border-radius:10px;border:1px solid var(--border);background:var(--glass);cursor:pointer;font-weight:700; color:white;}
+    .btn.primary{background:linear-gradient(90deg,var(--accent),#06b6d4);color:var(--text);border:none}
 
-  /* mobile nav toggle */
-  .nav-toggle{display:none;background:transparent;border:1px solid var(--border);color:var(--muted);padding:8px 10px;border-radius:8px;font-size:18px}
+    /* mobile nav toggle */
+    .nav-toggle{display:none;background:transparent;border:1px solid var(--border);color:var(--muted);padding:8px 10px;border-radius:8px;font-size:18px}
 
     /* utility overlays */
     .overlay-weak{background:var(--overlay-weak)}
@@ -87,23 +87,23 @@
     .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:18px}
     .card{background:var(--card);padding:14px;border-radius:12px;min-height:100px}
     .card h3{margin:0 0 8px;font-size:14px}
-  .muted{color:var(--muted);font-size:13px}
-  /* make very small labels slightly more readable */
-  small, .muted.small{font-size:12px;color:var(--muted)}
+    .muted{color:var(--muted);font-size:13px}
+    /* make very small labels slightly more readable */
+    small, .muted.small{font-size:12px;color:var(--muted)}
 
     /* features */
     section.features{margin:28px 0}
     .features-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
-  .feature{background:var(--card);padding:18px;border-radius:12px}
+    .feature{background:var(--card);padding:18px;border-radius:12px}
     .feature h4{margin:0 0 6px}
 
     /* large preview */
-  .preview{background:var(--card);border-radius:12px;padding:14px}
+    .preview{background:var(--card);border-radius:12px;padding:14px}
     .mock{
       width:100%;height:420px;border-radius:10px;background:linear-gradient(180deg, rgba(7,16,38,0.8), rgba(10,18,32,0.85));display:flex;flex-direction:column;padding:18px;gap:10px;overflow:auto
     }
     .mock .row{display:flex;gap:12px}
-  .pill{background:var(--overlay-strong);padding:8px 10px;border-radius:999px;font-weight:600;color:var(--text)}
+    .pill{background:var(--overlay-strong);padding:8px 10px;border-radius:999px;font-weight:600;color:var(--text)}
 
     footer{margin-top:28px;padding:18px;border-radius:12px;color:var(--muted);display:flex;justify-content:space-between;align-items:center}
 
@@ -117,7 +117,7 @@
       .grid{grid-template-columns:1fr}
       header{flex-direction:row;gap:12px;align-items:center}
       .nav-toggle{display:block}
-  nav{position:fixed;right:12px;top:72px;background:var(--nav-bg);padding:14px;border-radius:10px;display:none;flex-direction:column;gap:8px;box-shadow:0 10px 30px rgba(2,6,23,0.6)}
+    nav{position:fixed;right:12px;top:72px;background:var(--nav-bg);padding:14px;border-radius:10px;display:none;flex-direction:column;gap:8px;box-shadow:0 10px 30px rgba(2,6,23,0.6)}
       nav.open{display:flex}
       nav a{margin:0}
       .btn{padding:12px 16px;font-size:15px}
@@ -130,6 +130,36 @@
       .btn-row{flex-direction:column}
       .btn-row .btn{width:100%}
     }
+    /* Carousel styles */
+     /* Carousel styles */
+     .carousel{position:relative;background:var(--card);border-radius:12px;padding:12px;margin-top:12px;overflow:hidden}
+    .slides{display:flex;position:relative;transition: transform 0.5s ease-in-out;}
+    .slide{min-width:100%;flex-shrink:0;display:flex;justify-content:center;position:relative;}
+    .slide img{width:auto;height:520px;max-width:100%;object-fit:contain;border-radius:8px}
+    .carousel-btn{position:absolute;top:50%;transform:translateY(-50%);background:var(--overlay-strong);border:1px solid var(--border);color:var(--text);width:36px;height:36px;border-radius:999px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:10}
+    .carousel-btn.prev{left:12px}
+    .carousel-btn.next{right:12px}
+    .dots{display:flex;gap:6px;justify-content:center;margin-top:10px}
+    .dot{width:8px;height:8px;border-radius:50%;background:var(--overlay-strong);border:1px solid var(--border);cursor:pointer}
+    .dot.active{background:linear-gradient(90deg,var(--accent),#06b6d4)}
+
+    .video-responsive{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px}
+    .video-responsive video{position:absolute;top:0;left:0;width:100%;height:100%;border-radius:10px}
+
+    /* modal */
+    .media-modal{position:fixed;inset:0;background:rgba(2,6,23,0.85);display:none;align-items:center;justify-content:center;padding:18px;z-index:9999}
+    .media-modal.open{display:flex}
+    .media-modal img{max-width:100%;max-height:100%;border-radius:8px;box-shadow:0 20px 60px rgba(2,6,23,0.6)}
+    .media-modal .close{position:absolute;top:18px;right:18px;background:var(--overlay-strong);border-radius:8px;padding:8px 10px;color:var(--text);cursor:pointer}
+    
+    /* For ARIA live region */
+    .visually-hidden {
+      position: absolute; width: 1px; height: 1px;
+      padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0);
+      white-space: nowrap; border: 0; }
+
+    @media (max-width:640px){.slide img{height:440px}}
+    @media (max-width:420px){.slide img{height:360px}}
   </style>
 </head>
 <body>
@@ -275,48 +305,24 @@
 
       <section id="media" style="margin-top:22px">
         <h2 style="margin-bottom:12px">Screenshots & Video</h2>
-        <p class="muted">Tap to enlarge. The demo video below is responsive and playable on mobile.</p>
+        <p class="muted">Swipe or use arrows to browse. Images are full-size mobile screenshots.</p>
 
-        <div class="gallery">
-          <figure class="gallery-item">
-            <img src="assets/home.jpg" alt="Home screen" loading="lazy" />
-            <figcaption class="muted">Home</figcaption>
-          </figure>
-
-          <figure class="gallery-item">
-            <img src="assets/login.jpg" alt="Login screen" loading="lazy" />
-            <figcaption class="muted">Login</figcaption>
-          </figure>
-
-          <figure class="gallery-item">
-            <img src="assets/courses.jpg" alt="Courses screen" loading="lazy" />
-            <figcaption class="muted">Courses</figcaption>
-          </figure>
-
-          <figure class="gallery-item">
-            <img src="assets/events.jpg" alt="Events screen" loading="lazy" />
-            <figcaption class="muted">Events</figcaption>
-          </figure>
-
-          <figure class="gallery-item">
-            <img src="assets/mcq.jpg" alt="MCQ / Practice" loading="lazy" />
-            <figcaption class="muted">MCQ</figcaption>
-          </figure>
-
-          <figure class="gallery-item">
-            <img src="assets/reading.jpg" alt="Reading" loading="lazy" />
-            <figcaption class="muted">Reading</figcaption>
-          </figure>
-
-          <figure class="gallery-item">
-            <img src="assets/prep%20page.jpg" alt="Prep page" loading="lazy" />
-            <figcaption class="muted">Prep page</figcaption>
-          </figure>
-
-          <figure class="gallery-item">
-            <img src="assets/test%20history.jpg" alt="Test history" loading="lazy" />
-            <figcaption class="muted">Test history</figcaption>
-          </figure>
+        <div class="carousel" aria-roledescription="carousel" role="region" aria-label="Image Gallery">
+          <div class="visually-hidden" aria-live="polite" aria-atomic="true" id="carouselLiveRegion"></div>
+          <div class="slides" id="carouselSlides">
+            <!-- These are the original slides. Clones will be added by JS for infinite loop -->
+            <div class="slide" role="group" aria-roledescription="slide" data-label="Login"><img src="assets/login.jpg" alt="Login screen of Univault app" loading="lazy" /></div>
+            <div class="slide" role="group" aria-roledescription="slide" data-label="Home"><img src="assets/home.jpg" alt="Home dashboard of Univault app" loading="lazy" /></div>
+            <div class="slide" role="group" aria-roledescription="slide" data-label="Courses"><img src="assets/courses.jpg" alt="Courses view in Univault app" loading="lazy" /></div>
+            <div class="slide" role="group" aria-roledescription="slide" data-label="Prep page"><img src="assets/prep%20page.jpg" alt="Preparation page in Univault app" loading="lazy" /></div>
+            <div class="slide" role="group" aria-roledescription="slide" data-label="Reading"><img src="assets/reading.jpg" alt="Reading materials view in Univault app" loading="lazy" /></div>
+            <div class="slide" role="group" aria-roledescription="slide" data-label="MCQ"><img src="assets/mcq.jpg" alt="MCQ / Practice test interface in Univault app" loading="lazy" /></div>
+            <div class="slide" role="group" aria-roledescription="slide" data-label="Test history"><img src="assets/test%20history.jpg" alt="Test history and performance analytics in Univault app" loading="lazy" /></div>
+            <div class="slide" role="group" aria-roledescription="slide" data-label="Events"><img src="assets/events.jpg" alt="Events calendar in Univault app" loading="lazy" /></div>
+          </div>
+          <button class="carousel-btn prev" id="carouselPrev" aria-label="Previous slide">‹</button>
+          <button class="carousel-btn next" id="carouselNext" aria-label="Next slide">›</button>
+          <div class="dots" id="carouselDots" aria-hidden="false"></div>
         </div>
 
         <div style="margin-top:18px">
@@ -331,12 +337,8 @@
 
       </section>
 
-      <!-- promotional only: removed actionable get started buttons -->
-
-      <!-- signup moved to modal -->
-
       <section id="contact" style="margin-top:28px">
-        <h2>Contact & Tech notes</h2>
+        <h2>Contact & Tech notes </h2>
         <p class="muted">Backend: PHP & MySQL. Notifications: Firebase Cloud Messaging. Auth: Email OTP + Google Sign-In. Android client: Kotlin. Download the app on Google Play to try it: <a href="https://play.google.com/store/apps/details?id=com.simats.univault" style="color:var(--text)" target="_blank" rel="noopener">Play Store</a>.</p>
       </section>
 
@@ -348,61 +350,10 @@
     </footer>
   </div>
 
-  <style>
-    /* Media gallery styles */
-    .gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:12px}
-  .gallery-item{background:var(--overlay-weak);padding:8px;border-radius:10px;display:flex;flex-direction:column;align-items:center}
-    .gallery-item img{width:100%;height:140px;object-fit:cover;border-radius:8px;cursor:pointer}
-    .gallery-item figcaption{margin-top:8px;font-size:13px}
-
-    .video-responsive{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px}
-    .video-responsive video{position:absolute;top:0;left:0;width:100%;height:100%;border-radius:10px}
-
-    /* modal */
-    .media-modal{position:fixed;inset:0;background:rgba(2,6,23,0.85);display:none;align-items:center;justify-content:center;padding:18px;z-index:9999}
-    .media-modal.open{display:flex}
-    .media-modal img{max-width:100%;max-height:100%;border-radius:8px;box-shadow:0 20px 60px rgba(2,6,23,0.6)}
-  .media-modal .close{position:absolute;top:18px;right:18px;background:var(--overlay-strong);border-radius:8px;padding:8px 10px;color:var(--text);cursor:pointer}
-
-    /* signup modal */
-    .signup-overlay{position:fixed;inset:0;background:rgba(2,6,23,0.75);display:none;align-items:center;justify-content:center;padding:18px;z-index:10000;opacity:0;transition:opacity .2s ease}
-    .signup-overlay.open{display:flex;opacity:1}
-    .signup-modal{width:min(640px, 92vw);background:var(--surface);border:1px solid var(--border);border-radius:14px;box-shadow:0 20px 60px rgba(2,6,23,0.7);transform:translateY(6px);opacity:0;transition:opacity .2s ease, transform .2s ease}
-    .signup-overlay.open .signup-modal{opacity:1;transform:translateY(0)}
-    .signup-header{display:flex;justify-content:space-between;align-items:center;padding:16px 18px;border-bottom:1px solid var(--border)}
-    .signup-body{padding:18px}
-    .icon-btn{background:var(--overlay-strong);border:1px solid var(--border);color:var(--text);padding:8px 10px;border-radius:8px;cursor:pointer}
-    /* form controls */
-    .form input, .form select{
-      width:100%;
-      padding:12px 12px;
-      border-radius:10px;
-      border:1px solid var(--border);
-      background:var(--glass);
-      color:var(--text);
-      outline:none;
-      transition:border-color .15s ease, box-shadow .15s ease, background .15s ease;
-    }
-    .form input::placeholder{color:var(--muted)}
-    .form input:hover, .form select:hover{background:rgba(255,255,255,0.08)}
-    .form input:focus, .form select:focus{
-      border-color:#06b6d4;
-      box-shadow:0 0 0 3px rgba(14,165,233,0.25);
-      background:rgba(255,255,255,0.09);
-    }
-    .form .muted.small{display:block;margin-bottom:6px}
-
-    @media (max-width:980px){.gallery{grid-template-columns:repeat(3,1fr)}.gallery-item img{height:120px}}
-    @media (max-width:640px){.gallery{grid-template-columns:repeat(2,1fr)}.gallery-item img{height:110px}}
-    @media (max-width:420px){.gallery{grid-template-columns:1fr}.gallery-item img{height:220px}}
-  </style>
-
   <div id="mediaModal" class="media-modal" aria-hidden="true">
     <button class="close" id="modalClose">✕</button>
     <img id="modalImage" src="" alt="" />
   </div>
-
-  <!-- Signup removed for promotional-only version -->
 
   <script>
     // Simple modal for viewing images fullscreen
@@ -427,14 +378,22 @@
         document.body.style.overflow = '';
       }
 
-      document.querySelectorAll('.gallery-item img').forEach(img => {
-        img.addEventListener('click', () => openModal(img.src, img.alt));
+      document.querySelectorAll('.slide img').forEach(img => {
+        // Need to attach listeners only to original slides, excluding the clones
+        // The carousel logic will insert clones, so we'll check all slides but only attach if not a clone
+        img.addEventListener('click', () => {
+            // Check if the parent slide has the "clone" data attribute (added in carousel logic)
+            let slide = img.closest('.slide');
+            if (slide && !slide.hasAttribute('data-is-clone')) {
+                openModal(img.src, img.alt);
+            }
+        });
       });
 
       closeBtn.addEventListener('click', closeModal);
       modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
         document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeModal(); });
-  })();
+    })();
 
     // Mobile nav toggle
     (function(){
@@ -453,15 +412,153 @@
       nav && nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => nav.classList.remove('open')));
     })();
 
-    // Signup removed
-  </script>
+    // Carousel logic with arrows, dots, and swipe (INFINITE SCROLL and STOP ON HOVER)
+    (function(){
+      const slidesContainer = document.getElementById('carouselSlides');
+      if(!slidesContainer) return;
+      const carousel = document.querySelector('.carousel');
+      const prev = document.getElementById('carouselPrev');
+      const next = document.getElementById('carouselNext');
+      const dotsWrap = document.getElementById('carouselDots');
+      const liveRegion = document.getElementById('carouselLiveRegion');
+      
+      const originalSlides = Array.from(slidesContainer.children);
+      const totalSlides = originalSlides.length; // e.g., 8 slides
+      
+      // 1. Clone the first and last slides for infinite visual effect
+      const firstClone = originalSlides[0].cloneNode(true);
+      const lastClone = originalSlides[totalSlides - 1].cloneNode(true);
 
-  <!--
-    Notes for implementers (not shown in page):
-    - Replace the static CGPA and counts with API-driven values.
-    - Hook the "Try Demo" button to a real demo route or modal.
-    - Use Google Sign-In and FCM scripts where appropriate in production.
-    - This HTML is a single-file starter; feel free to split into assets and use Tailwind/React.
-  -->
+      // Mark clones for easier identification (e.g., to prevent modal trigger)
+      firstClone.setAttribute('data-is-clone', 'true');
+      lastClone.setAttribute('data-is-clone', 'true');
+
+      // Add clones to the slides container (lastClone at start, firstClone at end)
+      slidesContainer.appendChild(firstClone);
+      slidesContainer.insertBefore(lastClone, originalSlides[0]);
+      
+      let currentIndex = 1; // Start at the actual first slide (now index 1)
+      let autoSlideInterval;
+
+      // Define transition duration
+      const TRANSITION_DURATION = 500; // ms
+
+      // Function to move the carousel
+      function moveSlides(index, smooth = true){
+        slidesContainer.style.transition = smooth ? `transform ${TRANSITION_DURATION}ms ease-in-out` : 'none';
+        // translateX moves the container by one slide's width (100% of visible area) multiplied by the index
+        slidesContainer.style.transform = `translateX(-${index * 100}%)`;
+      }
+      
+      function updateState(newIndex, smooth = true) {
+        currentIndex = newIndex;
+        moveSlides(currentIndex, smooth);
+        
+        // Handle the snap-back logic *after* the smooth transition finishes
+        if (currentIndex === totalSlides + 1) { // Hit cloned first slide
+          // Snap back to actual first slide (index 1) without transition
+          currentIndex = 1; 
+          setTimeout(() => moveSlides(currentIndex, false), TRANSITION_DURATION);
+        } else if (currentIndex === 0) { // Hit cloned last slide
+          // Snap back to actual last slide (index totalSlides) without transition
+          currentIndex = totalSlides; 
+          setTimeout(() => moveSlides(currentIndex, false), TRANSITION_DURATION);
+        }
+
+        // --- Update Dots and ARIA Live Region ---
+        // The dot index maps to the original set of slides (0 to totalSlides-1)
+        let dotIndex = currentIndex - 1;
+
+        // If on a clone, show the dot for the target slide
+        if (currentIndex === 0) dotIndex = totalSlides - 1; // Cloned last -> show last dot
+        if (currentIndex === totalSlides + 1) dotIndex = 0; // Cloned first -> show first dot
+        
+        // Ensure index is valid for originalSlides array
+        if (dotIndex >= 0 && dotIndex < totalSlides) {
+            const activeSlide = originalSlides[dotIndex];
+            liveRegion.textContent = `Slide ${dotIndex + 1} of ${totalSlides}: ${activeSlide.dataset.label}`;
+        }
+
+
+        if(dotsWrap){
+          dotsWrap.querySelectorAll('.dot').forEach((d, i) => {
+            d.classList.toggle('active', i === dotIndex);
+          });
+        }
+      }
+
+      // Set initial position to the actual first slide (index 1) without transition
+      updateState(1, false);
+
+
+      // 2. Dots setup (only for original slides)
+      if(dotsWrap){
+        for(let i=0;i<totalSlides;i++){ // Iterate only for original slides
+          const dot = document.createElement('button');
+          dot.className = 'dot';
+          dot.setAttribute('aria-label', `Go to slide ${i+1}`);
+          // Dots map to indices 1 through totalSlides
+          dot.addEventListener('click', ()=>{ 
+            updateState(i + 1, true); // Go to actual index (i + 1)
+            resetAutoSlide(); 
+          });
+          dotsWrap.appendChild(dot);
+        }
+      }
+      
+      // 3. Navigation function
+      function go(delta){ 
+        let newIndex = currentIndex + delta;
+        updateState(newIndex, true);
+        resetAutoSlide();
+      }
+      
+      prev && prev.addEventListener('click', ()=>go(-1));
+      next && next.addEventListener('click', ()=>go(1));
+
+      // 4. Auto slide and stop on hover logic
+      function startAutoSlide() {
+        // Clear any existing interval before starting a new one
+        clearInterval(autoSlideInterval);
+        autoSlideInterval = setInterval(() => {
+          go(1);
+        }, 3000); // Change slide every 3 seconds
+      }
+      
+      function resetAutoSlide() {
+        clearInterval(autoSlideInterval);
+        startAutoSlide();
+      }
+      
+      // Start auto slide on load
+      startAutoSlide();
+
+      // Stop on hover implementation
+      carousel.addEventListener('mouseenter', () => clearInterval(autoSlideInterval));
+      carousel.addEventListener('mouseleave', startAutoSlide);
+      carousel.addEventListener('focusin', () => clearInterval(autoSlideInterval));
+      carousel.addEventListener('focusout', startAutoSlide);
+
+      // 5. Swipe support (Update index calculation)
+      let startX = 0, isDown = false;
+      slidesContainer.addEventListener('pointerdown', (e)=>{ 
+        isDown = true; 
+        startX = e.clientX; 
+        slidesContainer.setPointerCapture(e.pointerId); 
+        clearInterval(autoSlideInterval); // Pause on touch/drag start
+      });
+      slidesContainer.addEventListener('pointerup', (e)=>{
+        if(!isDown) return; 
+        isDown = false; 
+        const dx = e.clientX - startX; 
+        if(Math.abs(dx) > 40){ 
+          go(dx < 0 ? 1 : -1); 
+        }
+        startAutoSlide(); // Resume on touch/drag end
+      });
+      slidesContainer.addEventListener('pointercancel', ()=>{ isDown=false; startAutoSlide(); });
+      
+    })();
+  </script>
 </body>
 </html>
