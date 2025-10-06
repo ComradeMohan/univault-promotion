@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Univault — Student Dashboard</title>
+  <meta name="description" content="Univault: your student dashboard for grades, attendance, notifications and academic records." />
+  <style>
+    /* Minimal modern CSS — responsive single-page layout */
+    :root{
+      --bg:#0f1724; /* dark navy */
+      --surface:#0b1220;
+      --muted:#94a3b8;
+      --accent:#7c3aed; /* purple */
+      --glass: rgba(255,255,255,0.04);
+      --card: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      background: radial-gradient(1000px 400px at 10% 10%, rgba(124,58,237,0.12), transparent),
+                  radial-gradient(700px 300px at 90% 90%, rgba(14,165,233,0.06), transparent),
+                  var(--bg);
+      color:#e6eef8;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.4;
+      padding:24px;
+    }
+    .container{max-width:1100px;margin:0 auto}
+
+    header{
+      display:flex;align-items:center;justify-content:space-between;padding:18px 12px;margin-bottom:22px;
+      background:transparent;border-radius:14px;
+    }
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{
+      width:52px;height:52px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#06b6d4);display:flex;align-items:center;justify-content:center;font-weight:700;color:white;font-size:20px;box-shadow:0 6px 20px rgba(124,58,237,0.12)
+    }
+    nav a{color:var(--muted);text-decoration:none;margin-left:18px;font-weight:600}
+    nav a.cta{background:linear-gradient(90deg,var(--accent),#06b6d4);color:white;padding:10px 14px;border-radius:10px}
+
+    .hero{
+      display:grid;grid-template-columns:1fr 420px;gap:28px;align-items:center;margin-bottom:28px
+    }
+    .hero .panel{background:var(--surface);padding:28px;border-radius:16px;box-shadow:0 6px 30px rgba(2,6,23,0.6)}
+    .hero h1{font-size:34px;margin:0 0 8px}
+    .hero p{color:var(--muted);margin:0 0 18px}
+    .btn-row{display:flex;gap:12px}
+    .btn{padding:10px 14px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:var(--glass);cursor:pointer;font-weight:700}
+    .btn.primary{background:linear-gradient(90deg,var(--accent),#06b6d4);color:#fff;border:none}
+
+    /* cards grid */
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:18px}
+    .card{background:var(--card);padding:14px;border-radius:12px;min-height:100px}
+    .card h3{margin:0 0 8px;font-size:14px}
+    .muted{color:var(--muted);font-size:13px}
+
+    /* features */
+    section.features{margin:28px 0}
+    .features-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+    .feature{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:18px;border-radius:12px}
+    .feature h4{margin:0 0 6px}
+
+    /* large preview */
+    .preview{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:12px;padding:14px}
+    .mock{
+      width:100%;height:420px;border-radius:10px;background:linear-gradient(180deg,#071026,#0a1220);display:flex;flex-direction:column;padding:18px;gap:10px;overflow:auto
+    }
+    .mock .row{display:flex;gap:12px}
+    .pill{background:rgba(255,255,255,0.03);padding:8px 10px;border-radius:999px;font-weight:600}
+
+    footer{margin-top:28px;padding:18px;border-radius:12px;color:var(--muted);display:flex;justify-content:space-between;align-items:center}
+
+    /* responsive */
+    @media (max-width:980px){
+      .hero{grid-template-columns:1fr;}
+      .grid{grid-template-columns:repeat(2,1fr)}
+      .features-grid{grid-template-columns:1fr}
+    }
+    @media (max-width:560px){
+      .grid{grid-template-columns:1fr}
+      header{flex-direction:column;gap:12px}
+      nav a{margin-left:8px}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="logo">U</div>
+        <div>
+          <div style="font-weight:800">Univault</div>
+          <div class="muted" style="font-size:12px">Student dashboard • Grades • Attendance • Notifications</div>
+        </div>
+      </div>
+      <nav>
+        <a href="#features">Features</a>
+        <a href="#preview">Preview</a>
+        <a href="#contact">Contact</a>
+        <a class="cta" href="#getstarted">Get Started</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="panel">
+          <h1>All your student essentials in one place</h1>
+          <p>Univault syncs grades, attendance, notifications and calendars from your college portal and displays them in a clean, mobile-friendly dashboard. Export PDFs, sign-in with Google, and get push notifications — designed for students & admins.</p>
+
+          <div class="btn-row">
+            <button class="btn primary">Try Demo</button>
+            <button class="btn">Download PDF</button>
+          </div>
+
+          <div class="grid" style="margin-top:18px">
+            <div class="card">
+              <h3>CGPA</h3>
+              <div style="font-size:22px;font-weight:800">8.34</div>
+              <div class="muted">Calculated (S-10, A-9, B-8, C-7, D-6, E-5)</div>
+            </div>
+            <div class="card">
+              <h3>Completed Courses</h3>
+              <div style="font-size:22px;font-weight:800">42</div>
+              <div class="muted">Includes filtered failed subjects</div>
+            </div>
+            <div class="card">
+              <h3>Notifications</h3>
+              <div style="font-size:22px;font-weight:800">6</div>
+              <div class="muted">New & unread</div>
+            </div>
+          </div>
+        </div>
+
+        <aside class="panel">
+          <h3 style="margin-top:0">Quick Actions</h3>
+          <div style="display:flex;flex-direction:column;gap:8px;margin-top:12px">
+            <button class="btn">Sync Portal</button>
+            <button class="btn">Verify Email (OTP)</button>
+            <button class="btn">Google Register</button>
+          </div>
+
+          <div style="margin-top:16px">
+            <h4 style="margin:0 0 8px">Live Status</h4>
+            <div class="muted">Web-scraper: <strong style="color:#34d399">Running</strong></div>
+            <div class="muted">FCM: <strong style="color:#34d399">Connected</strong></div>
+          </div>
+        </aside>
+      </section>
+
+      <section id="features" class="features">
+        <h2 style="margin:0 0 14px">Features</h2>
+        <div class="features-grid">
+          <div class="feature">
+            <h4>Academic Records</h4>
+            <p class="muted">Dynamic CGPA calculation, grade distribution, completed & pending course lists, and per-semester breakdown. Option to download a styled PDF containing profile, courses and CGPA.</p>
+          </div>
+
+          <div class="feature">
+            <h4>Portal Scraper & Sync</h4>
+            <p class="muted">Headless Chromium scraper (works in Render/Docker) fetches notifications, attendance and grades from Saveetha ARMS and your university portal. Uses webdriver-manager for robust deployment.</p>
+          </div>
+
+          <div class="feature">
+            <h4>Notifications & FCM</h4>
+            <p class="muted">Send push notifications via FCM. Tapping a notification opens the main app (SplashActivity) regardless of deep link targets.</p>
+          </div>
+
+          <div class="feature">
+            <h4>Authentication</h4>
+            <p class="muted">Email OTP verification flow (PHP backend) plus Google Sign-In. On registration via college mail, the app pre-fills email & full name fields and blocks generic gmail.com registrations.</p>
+          </div>
+
+          <div class="feature">
+            <h4>Admin Calendar</h4>
+            <p class="muted">Create events with duplicate checks, select dates with a date picker, and sync events to server. Events filter by selected calendar date.</p>
+          </div>
+
+          <div class="feature">
+            <h4>Course Management</h4>
+            <p class="muted">Admin interface for departments and courses with CRUD operations, RecyclerView lists, and server API built with PHP & MySQL.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="preview" style="margin-top:18px">
+        <h2 style="margin-bottom:12px">Dashboard preview</h2>
+        <div class="preview">
+          <div class="mock">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <div class="pill">Univault — Student</div>
+              <div class="muted">Last synced: Oct 5, 2025</div>
+            </div>
+
+            <div class="row" style="margin-top:12px">
+              <div style="flex:1;padding:12px;background:rgba(255,255,255,0.02);border-radius:10px">
+                <div style="font-weight:800">CGPA</div>
+                <div style="font-size:28px;margin-top:6px">8.34</div>
+                <div class="muted" style="margin-top:6px">S:10 A:9 B:8 C:7 D:6 E:5</div>
+              </div>
+              <div style="width:12px"></div>
+              <div style="width:220px;padding:12px;background:rgba(255,255,255,0.02);border-radius:10px">
+                <div style="font-weight:800">Notifications</div>
+                <div class="muted" style="margin-top:8px">You have 6 new notices</div>
+              </div>
+            </div>
+
+            <div style="margin-top:12px;padding:12px;background:rgba(255,255,255,0.02);border-radius:10px">
+              <div style="font-weight:800">Completed Courses</div>
+              <div class="muted">List shows CourseID - CourseName and grade. Items can be searched and deleted.</div>
+            </div>
+
+            <div style="margin-top:12px;padding:12px;background:rgba(255,255,255,0.02);border-radius:10px">
+              <div style="font-weight:800">Calendar (Admin)</div>
+              <div class="muted">Events sync to server. Duplicate checks prevent repeats.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="getstarted" style="margin-top:18px">
+        <h2>Get started</h2>
+        <p class="muted">Integrate Univault into your workflow — for students and admins. Use the API endpoints to sync data, or deploy the scraping service on Render with headless Chromium and webdriver-manager.</p>
+
+        <div style="display:flex;gap:12px;margin-top:12px;flex-wrap:wrap">
+          <a href="#" class="btn primary">Request Demo</a>
+          <a href="#" class="btn">View Docs</a>
+          <a href="#contact" class="btn">Contact Support</a>
+        </div>
+      </section>
+
+      <section id="contact" style="margin-top:28px">
+        <h2>Contact & Tech notes</h2>
+        <p class="muted">Backend: PHP & MySQL. Notifications: Firebase Cloud Messaging (service account). Auth: Email OTP (PHP) + Google Sign-In (Firebase client for token retrieval). Scraper: Selenium + headless Chromium in Docker. Android client: Kotlin (Volley for network requests).</p>
+      </section>
+
+    </main>
+
+    <footer>
+      <div>© Univault • Built for Saveetha / Student portals</div>
+      <div class="muted">Need changes? Ask me to: create download-ready PDF template, export CSV, or make a React single-file version.</div>
+    </footer>
+  </div>
+
+  <!--
+    Notes for implementers (not shown in page):
+    - Replace the static CGPA and counts with API-driven values.
+    - Hook the "Try Demo" button to a real demo route or modal.
+    - Use Google Sign-In and FCM scripts where appropriate in production.
+    - This HTML is a single-file starter; feel free to split into assets and use Tailwind/React.
+  -->
+</body>
+</html>
