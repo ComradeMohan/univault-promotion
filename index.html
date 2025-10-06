@@ -5,15 +5,39 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Univault — Student Dashboard</title>
   <meta name="description" content="Univault: your student dashboard for grades, attendance, notifications and academic records." />
+  <meta name="robots" content="index,follow" />
+  <meta name="theme-color" content="#0f1724" />
+  <link rel="canonical" href="https://univault.vercel.app/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Univault" />
+  <meta property="og:title" content="Univault — Student Dashboard" />
+  <meta property="og:description" content="Grades, attendance, notifications and academic records in one place." />
+  <meta property="og:url" content="https://univault.vercel.app/" />
+  <meta property="og:image" content="assets/home.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Univault — Student Dashboard" />
+  <meta name="twitter:description" content="Grades, attendance, notifications and academic records in one place." />
+  <meta name="twitter:image" content="assets/home.jpg" />
   <style>
     /* Minimal modern CSS — responsive single-page layout */
     :root{
       --bg:#0f1724; /* dark navy */
       --surface:#0b1220;
-      --muted:#94a3b8;
+      /* primary text (high contrast) */
+      --text:#eaf4ff; /* near-white for strong contrast */
+      /* Increased contrast muted color for better legibility on dark backgrounds */
+      --muted:#9fb7c8; /* slightly cooler muted tone */
       --accent:#7c3aed; /* purple */
-      --glass: rgba(255,255,255,0.04);
-      --card: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      /* overlays used for cards / subtle surfaces */
+      --overlay-weak: rgba(255,255,255,0.03);
+      --overlay-strong: rgba(255,255,255,0.07);
+      /* Slightly stronger glass/card so small text sits above background */
+      --glass: rgba(255,255,255,0.06);
+      --card: linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.02));
+      /* semantic colors */
+      --success: #34d399;
+      --border: rgba(255,255,255,0.06);
+      --nav-bg: rgba(11,18,32,0.95);
       font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
     }
     *{box-sizing:border-box}
@@ -23,7 +47,7 @@
       background: radial-gradient(1000px 400px at 10% 10%, rgba(124,58,237,0.12), transparent),
                   radial-gradient(700px 300px at 90% 90%, rgba(14,165,233,0.06), transparent),
                   var(--bg);
-      color:#e6eef8;
+  color:var(--text);
       -webkit-font-smoothing:antialiased;
       -moz-osx-font-smoothing:grayscale;
       line-height:1.4;
@@ -36,11 +60,11 @@
       background:transparent;border-radius:14px;
     }
     .brand{display:flex;gap:12px;align-items:center}
-    .logo{
-      width:52px;height:52px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#06b6d4);display:flex;align-items:center;justify-content:center;font-weight:700;color:white;font-size:20px;box-shadow:0 6px 20px rgba(124,58,237,0.12)
-    }
-    nav a{color:var(--muted);text-decoration:none;margin-left:18px;font-weight:600}
-    nav a.cta{background:linear-gradient(90deg,var(--accent),#06b6d4);color:white;padding:10px 14px;border-radius:10px}
+    .logo{width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 20px rgba(124,58,237,0.12);overflow:hidden;background:transparent}
+    .logo img{width:100%;height:100%;object-fit:contain;display:block}
+  nav a{color:var(--muted);text-decoration:none;margin-left:18px;font-weight:600}
+  nav a:focus, nav a:hover{color:var(--text);text-decoration:underline}
+  nav a.cta{background:linear-gradient(90deg,var(--accent),#06b6d4);color:var(--text);padding:10px 14px;border-radius:10px}
 
     .hero{
       display:grid;grid-template-columns:1fr 420px;gap:28px;align-items:center;margin-bottom:28px
@@ -49,30 +73,45 @@
     .hero h1{font-size:34px;margin:0 0 8px}
     .hero p{color:var(--muted);margin:0 0 18px}
     .btn-row{display:flex;gap:12px}
-    .btn{padding:10px 14px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:var(--glass);cursor:pointer;font-weight:700}
-    .btn.primary{background:linear-gradient(90deg,var(--accent),#06b6d4);color:#fff;border:none}
+  .btn{padding:10px 14px;border-radius:10px;border:1px solid var(--border);background:var(--glass);cursor:pointer;font-weight:700; color:white;}
+  .btn.primary{background:linear-gradient(90deg,var(--accent),#06b6d4);color:var(--text);border:none}
+
+  /* mobile nav toggle */
+  .nav-toggle{display:none;background:transparent;border:1px solid var(--border);color:var(--muted);padding:8px 10px;border-radius:8px;font-size:18px}
+
+    /* utility overlays */
+    .overlay-weak{background:var(--overlay-weak)}
+    .overlay-strong{background:var(--overlay-strong)}
 
     /* cards grid */
     .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:18px}
     .card{background:var(--card);padding:14px;border-radius:12px;min-height:100px}
     .card h3{margin:0 0 8px;font-size:14px}
-    .muted{color:var(--muted);font-size:13px}
+  .muted{color:var(--muted);font-size:13px}
+  /* make very small labels slightly more readable */
+  small, .muted.small{font-size:12px;color:var(--muted)}
 
     /* features */
     section.features{margin:28px 0}
     .features-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
-    .feature{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:18px;border-radius:12px}
+  .feature{background:var(--card);padding:18px;border-radius:12px}
     .feature h4{margin:0 0 6px}
 
     /* large preview */
-    .preview{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:12px;padding:14px}
+  .preview{background:var(--card);border-radius:12px;padding:14px}
     .mock{
-      width:100%;height:420px;border-radius:10px;background:linear-gradient(180deg,#071026,#0a1220);display:flex;flex-direction:column;padding:18px;gap:10px;overflow:auto
+      width:100%;height:420px;border-radius:10px;background:linear-gradient(180deg, rgba(7,16,38,0.8), rgba(10,18,32,0.85));display:flex;flex-direction:column;padding:18px;gap:10px;overflow:auto
     }
     .mock .row{display:flex;gap:12px}
-    .pill{background:rgba(255,255,255,0.03);padding:8px 10px;border-radius:999px;font-weight:600}
+  .pill{background:var(--overlay-strong);padding:8px 10px;border-radius:999px;font-weight:600;color:var(--text)}
 
     footer{margin-top:28px;padding:18px;border-radius:12px;color:var(--muted);display:flex;justify-content:space-between;align-items:center}
+
+    /* signup */
+    #signup .form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    #signup .form .full{grid-column:1 / -1}
+    #signup input, #signup select{width:100%;padding:10px;border-radius:10px;border:1px solid var(--border);background:var(--glass);color:var(--text)}
+    #signup .note{color:var(--muted);font-size:13px}
 
     /* responsive */
     @media (max-width:980px){
@@ -82,8 +121,20 @@
     }
     @media (max-width:560px){
       .grid{grid-template-columns:1fr}
-      header{flex-direction:column;gap:12px}
-      nav a{margin-left:8px}
+      header{flex-direction:row;gap:12px;align-items:center}
+      .nav-toggle{display:block}
+  nav{position:fixed;right:12px;top:72px;background:var(--nav-bg);padding:14px;border-radius:10px;display:none;flex-direction:column;gap:8px;box-shadow:0 10px 30px rgba(2,6,23,0.6)}
+      nav.open{display:flex}
+      nav a{margin:0}
+      .btn{padding:12px 16px;font-size:15px}
+      .hero .panel{padding:18px}
+      .mock{height:300px}
+    }
+    @media (max-width:420px){
+      .nav-toggle{right:12px}
+      .gallery-item img{height:200px}
+      .btn-row{flex-direction:column}
+      .btn-row .btn{width:100%}
     }
   </style>
 </head>
@@ -91,17 +142,19 @@
   <div class="container">
     <header>
       <div class="brand">
-        <div class="logo">U</div>
+        <div class="logo"><img src="assets/favicon.png" alt="Univault logo" /></div>
         <div>
           <div style="font-weight:800">Univault</div>
           <div class="muted" style="font-size:12px">Student dashboard • Grades • Attendance • Notifications</div>
         </div>
       </div>
+      <button class="nav-toggle" aria-label="Toggle navigation">☰</button>
       <nav>
         <a href="#features">Features</a>
         <a href="#preview">Preview</a>
+        <a href="#media">Media</a>
         <a href="#contact">Contact</a>
-        <a class="cta" href="#getstarted">Get Started</a>
+        <a class="cta" href="#signup">Sign Up</a>
       </nav>
     </header>
 
@@ -138,15 +191,15 @@
         <aside class="panel">
           <h3 style="margin-top:0">Quick Actions</h3>
           <div style="display:flex;flex-direction:column;gap:8px;margin-top:12px">
-            <button class="btn">Sync Portal</button>
+            <button class="btn">Sync Account</button>
             <button class="btn">Verify Email (OTP)</button>
-            <button class="btn">Google Register</button>
+            <button class="btn">Sign in with Google</button>
           </div>
 
           <div style="margin-top:16px">
             <h4 style="margin:0 0 8px">Live Status</h4>
-            <div class="muted">Web-scraper: <strong style="color:#34d399">Running</strong></div>
-            <div class="muted">FCM: <strong style="color:#34d399">Connected</strong></div>
+            <div class="muted">Sync service: <strong style="color:var(--success)">Active</strong></div>
+            <div class="muted">Push service: <strong style="color:var(--success)">Connected</strong></div>
           </div>
         </aside>
       </section>
@@ -160,8 +213,8 @@
           </div>
 
           <div class="feature">
-            <h4>Portal Scraper & Sync</h4>
-            <p class="muted">Headless Chromium scraper (works in Render/Docker) fetches notifications, attendance and grades from Saveetha ARMS and your university portal. Uses webdriver-manager for robust deployment.</p>
+            <h4>Portal Sync</h4>
+            <p class="muted">Secure portal sync and account linking — sync grades, attendance and notifications directly into the Univault app.</p>
           </div>
 
           <div class="feature">
@@ -196,24 +249,24 @@
             </div>
 
             <div class="row" style="margin-top:12px">
-              <div style="flex:1;padding:12px;background:rgba(255,255,255,0.02);border-radius:10px">
+              <div class="overlay-weak" style="flex:1;padding:12px;border-radius:10px">
                 <div style="font-weight:800">CGPA</div>
                 <div style="font-size:28px;margin-top:6px">8.34</div>
                 <div class="muted" style="margin-top:6px">S:10 A:9 B:8 C:7 D:6 E:5</div>
               </div>
               <div style="width:12px"></div>
-              <div style="width:220px;padding:12px;background:rgba(255,255,255,0.02);border-radius:10px">
+              <div class="overlay-weak" style="width:220px;padding:12px;border-radius:10px">
                 <div style="font-weight:800">Notifications</div>
                 <div class="muted" style="margin-top:8px">You have 6 new notices</div>
               </div>
             </div>
 
-            <div style="margin-top:12px;padding:12px;background:rgba(255,255,255,0.02);border-radius:10px">
+            <div class="overlay-weak" style="margin-top:12px;padding:12px;border-radius:10px">
               <div style="font-weight:800">Completed Courses</div>
               <div class="muted">List shows CourseID - CourseName and grade. Items can be searched and deleted.</div>
             </div>
 
-            <div style="margin-top:12px;padding:12px;background:rgba(255,255,255,0.02);border-radius:10px">
+            <div class="overlay-weak" style="margin-top:12px;padding:12px;border-radius:10px">
               <div style="font-weight:800">Calendar (Admin)</div>
               <div class="muted">Events sync to server. Duplicate checks prevent repeats.</div>
             </div>
@@ -221,20 +274,77 @@
         </div>
       </section>
 
+      <section id="media" style="margin-top:22px">
+        <h2 style="margin-bottom:12px">Screenshots & Video</h2>
+        <p class="muted">Tap to enlarge. The demo video below is responsive and playable on mobile.</p>
+
+        <div class="gallery">
+          <figure class="gallery-item">
+            <img src="assets/home.jpg" alt="Home screen" loading="lazy" />
+            <figcaption class="muted">Home</figcaption>
+          </figure>
+
+          <figure class="gallery-item">
+            <img src="assets/login.jpg" alt="Login screen" loading="lazy" />
+            <figcaption class="muted">Login</figcaption>
+          </figure>
+
+          <figure class="gallery-item">
+            <img src="assets/courses.jpg" alt="Courses screen" loading="lazy" />
+            <figcaption class="muted">Courses</figcaption>
+          </figure>
+
+          <figure class="gallery-item">
+            <img src="assets/events.jpg" alt="Events screen" loading="lazy" />
+            <figcaption class="muted">Events</figcaption>
+          </figure>
+
+          <figure class="gallery-item">
+            <img src="assets/mcq.jpg" alt="MCQ / Practice" loading="lazy" />
+            <figcaption class="muted">MCQ</figcaption>
+          </figure>
+
+          <figure class="gallery-item">
+            <img src="assets/reading.jpg" alt="Reading" loading="lazy" />
+            <figcaption class="muted">Reading</figcaption>
+          </figure>
+
+          <figure class="gallery-item">
+            <img src="assets/prep%20page.jpg" alt="Prep page" loading="lazy" />
+            <figcaption class="muted">Prep page</figcaption>
+          </figure>
+
+          <figure class="gallery-item">
+            <img src="assets/test%20history.jpg" alt="Test history" loading="lazy" />
+            <figcaption class="muted">Test history</figcaption>
+          </figure>
+        </div>
+
+        <div style="margin-top:18px">
+          <h3 style="margin:0 0 8px">Demo video</h3>
+          <div class="video-responsive">
+            <video controls playsinline preload="metadata" poster="assets/home.jpg">
+              <source src="assets/Univault.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+
+      </section>
+
       <section id="getstarted" style="margin-top:18px">
         <h2>Get started</h2>
-        <p class="muted">Integrate Univault into your workflow — for students and admins. Use the API endpoints to sync data, or deploy the scraping service on Render with headless Chromium and webdriver-manager.</p>
+        <p class="muted">Download Univault on Android and sign in with your college account to start syncing grades, attendance and notifications.</p>
 
-        <div style="display:flex;gap:12px;margin-top:12px;flex-wrap:wrap">
-          <a href="#" class="btn primary">Request Demo</a>
-          <a href="#" class="btn">View Docs</a>
+        <div style="display:flex;gap:12px;margin-top:12px;flex-wrap:wrap;align-items:center">
+          <a class="btn primary" href="https://play.google.com/store/apps/details?id=com.simats.univault" target="_blank" rel="noopener">Download on Google Play</a>
           <a href="#contact" class="btn">Contact Support</a>
         </div>
       </section>
 
       <section id="contact" style="margin-top:28px">
         <h2>Contact & Tech notes</h2>
-        <p class="muted">Backend: PHP & MySQL. Notifications: Firebase Cloud Messaging (service account). Auth: Email OTP (PHP) + Google Sign-In (Firebase client for token retrieval). Scraper: Selenium + headless Chromium in Docker. Android client: Kotlin (Volley for network requests).</p>
+        <p class="muted">Backend: PHP & MySQL. Notifications: Firebase Cloud Messaging. Auth: Email OTP + Google Sign-In. Android client: Kotlin. Download the app on Google Play to try it: <a href="https://play.google.com/store/apps/details?id=com.simats.univault" style="color:var(--text)" target="_blank" rel="noopener">Play Store</a>.</p>
       </section>
 
     </main>
@@ -244,6 +354,82 @@
       <div class="muted">Need changes? Ask me to: create download-ready PDF template, export CSV, or make a React single-file version.</div>
     </footer>
   </div>
+
+  <style>
+    /* Media gallery styles */
+    .gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:12px}
+  .gallery-item{background:var(--overlay-weak);padding:8px;border-radius:10px;display:flex;flex-direction:column;align-items:center}
+    .gallery-item img{width:100%;height:140px;object-fit:cover;border-radius:8px;cursor:pointer}
+    .gallery-item figcaption{margin-top:8px;font-size:13px}
+
+    .video-responsive{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px}
+    .video-responsive video{position:absolute;top:0;left:0;width:100%;height:100%;border-radius:10px}
+
+    /* modal */
+    .media-modal{position:fixed;inset:0;background:rgba(2,6,23,0.85);display:none;align-items:center;justify-content:center;padding:18px;z-index:9999}
+    .media-modal.open{display:flex}
+    .media-modal img{max-width:100%;max-height:100%;border-radius:8px;box-shadow:0 20px 60px rgba(2,6,23,0.6)}
+  .media-modal .close{position:absolute;top:18px;right:18px;background:var(--overlay-strong);border-radius:8px;padding:8px 10px;color:var(--text);cursor:pointer}
+
+    @media (max-width:980px){.gallery{grid-template-columns:repeat(3,1fr)}.gallery-item img{height:120px}}
+    @media (max-width:640px){.gallery{grid-template-columns:repeat(2,1fr)}.gallery-item img{height:110px}}
+    @media (max-width:420px){.gallery{grid-template-columns:1fr}.gallery-item img{height:220px}}
+  </style>
+
+  <div id="mediaModal" class="media-modal" aria-hidden="true">
+    <button class="close" id="modalClose">✕</button>
+    <img id="modalImage" src="" alt="" />
+  </div>
+
+  <script>
+    // Simple modal for viewing images fullscreen
+    (function(){
+      const modal = document.getElementById('mediaModal');
+      const modalImg = document.getElementById('modalImage');
+      const closeBtn = document.getElementById('modalClose');
+
+      function openModal(src, alt){
+        modalImg.src = src;
+        modalImg.alt = alt || '';
+        modal.classList.add('open');
+        modal.setAttribute('aria-hidden','false');
+        // prevent background scroll
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeModal(){
+        modal.classList.remove('open');
+        modal.setAttribute('aria-hidden','true');
+        modalImg.src = '';
+        document.body.style.overflow = '';
+      }
+
+      document.querySelectorAll('.gallery-item img').forEach(img => {
+        img.addEventListener('click', () => openModal(img.src, img.alt));
+      });
+
+      closeBtn.addEventListener('click', closeModal);
+      modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
+        document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeModal(); });
+  })();
+
+    // Mobile nav toggle
+    (function(){
+      const toggle = document.querySelector('.nav-toggle');
+      const nav = document.querySelector('header nav');
+      toggle && toggle.addEventListener('click', () => {
+        if(nav.classList.contains('open')){
+          nav.classList.remove('open');
+          toggle.setAttribute('aria-expanded','false');
+        } else {
+          nav.classList.add('open');
+          toggle.setAttribute('aria-expanded','true');
+        }
+      });
+      // close nav when a link is clicked (mobile)
+      nav && nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => nav.classList.remove('open')));
+    })();
+  </script>
 
   <!--
     Notes for implementers (not shown in page):
