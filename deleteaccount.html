@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Management - UniVault</title>
+    <!-- Load Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for professional aesthetics */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom scrollbar for cleanliness (optional but good) */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+        
+        .form-input-custom {
+            transition: all 0.2s ease-in-out;
+            @apply border-gray-300 rounded-lg focus:border-indigo-500 focus:ring-indigo-500 bg-white hover:border-gray-400;
+        }
+
+        /* Modal specific styling */
+        .modal-overlay {
+            transition: opacity 0.3s ease;
+        }
+
+        /* Notification Styling */
+        #snackbar {
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            transform: translateY(100%);
+            opacity: 0;
+        }
+        #snackbar.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    </style>
+    <script>
+        // Set the global font to Inter
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 flex flex-col items-center justify-center min-h-screen py-8">
+
+    <div class="w-full max-w-xl mx-4 lg:mx-auto bg-white shadow-2xl rounded-xl p-6 sm:p-8 border border-gray-100">
+        
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <div class="flex items-center justify-center mb-3">
+                <!-- Custom SVG for a professional, vault-like logo -->
+                <svg class="w-8 h-8 text-indigo-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                </svg>
+                <span class="text-2xl font-extrabold text-indigo-700 tracking-tight">UniVault</span>
+            </div>
+            <h1 class="text-3xl font-bold text-gray-800 mb-1">Account Management</h1>
+            <p class="text-gray-500">Manage your data privacy and account closure options.</p>
+        </div>
+        
+        <div class="border-t border-gray-200 pt-8">
+
+            <!-- 2. Account Deletion Section -->
+            <h2 class="text-2xl font-bold text-red-600 mb-4 flex items-center">
+                <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                Permanent Account Deletion
+            </h2>
+            
+            <div class="p-4 bg-red-50 border border-red-200 rounded-lg mb-6">
+                <p class="text-sm font-medium text-red-700">
+                    <span class="font-bold">Important:</span> This action is irreversible. All associated data, including your academic profile, scores, and activity history, will be permanently deleted 24 hours after confirmation.
+                </p>
+            </div>
+            
+            <form id="deleteForm" onsubmit="validateAndShowModal(event)">
+                
+                <div class="mb-4">
+                    <label for="username" class="block text-sm font-medium text-gray-700 mb-1">Student ID / Username</label>
+                    <input type="text" id="username" name="username" required 
+                           class="form-input-custom w-full p-2.5"
+                           placeholder="Enter your student ID (e.g., 192210400)" oninput="validateStudentData()">
+                    <p id="username-hint" class="text-xs text-red-600 mt-1 hidden font-medium">
+                        Please enter a valid student ID format (e.g., 192XXXXXX).
+                    </p>
+                </div>
+
+                <div class="mb-4">
+                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">University Email</label>
+                    <input type="email" id="email" name="email" required 
+                           class="form-input-custom w-full p-2.5"
+                           placeholder="Enter your registered university email">
+                </div>
+                
+                <div class="mb-4">
+                    <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Account Password</label>
+                    <input type="password" id="password" name="password" required 
+                           class="form-input-custom w-full p-2.5"
+                           placeholder="Enter your current password">
+                </div>
+
+                <div class="mb-6">
+                    <label for="reason" class="block text-sm font-medium text-gray-700 mb-1">Reason for Deletion (Optional)</label>
+                    <select name="reason" id="reason" class="form-input-custom w-full p-2.5" onchange="checkReason()">
+                        <option value="">Select a reason...</option>
+                        <option value="graduated">Completed my studies/Graduated</option>
+                        <option value="not_used">No longer using the platform</option>
+                        <option value="privacy">Privacy concerns or data control</option>
+                        <option value="technical_issues">Experiencing technical issues</option>
+                        <option value="other">Other reason (Please specify)</option>
+                    </select>
+                    
+                    <div class="mt-3 hidden" id="custom-reason-box">
+                        <input type="text" id="custom-reason" name="custom_reason" maxlength="200" 
+                               placeholder="Specify your reason here..." class="form-input-custom w-full p-2.5">
+                    </div>
+                </div>
+
+                <button type="submit" id="submitBtn" class="w-full py-3 bg-red-600 text-white font-bold rounded-lg hover:bg-red-700 transition duration-150 shadow-lg shadow-red-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">
+                    Verify and Permanently Delete Account
+                </button>
+            </form>
+            
+            <div class="mt-6 text-center">
+                <a href="#" onclick="console.log('Navigation to Dashboard is intended here.'); return false;" class="text-sm text-indigo-600 hover:text-indigo-800 font-medium transition duration-150">
+                    ← Back to Dashboard
+                </a>
+            </div>
+
+        </div>
+    </div>
+    
+    <!-- Custom Confirmation Modal (Replaces JS confirm()) -->
+    <div id="confirmationModal" class="modal-overlay fixed inset-0 bg-gray-900 bg-opacity-70 z-50 flex items-center justify-center opacity-0 pointer-events-none" aria-modal="true" role="dialog">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-sm p-6 transform translate-y-4 transition duration-300">
+            <div class="text-center">
+                <svg class="mx-auto w-12 h-12 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                <h3 class="mt-3 text-xl font-bold text-gray-900">Final Confirmation</h3>
+                <div class="mt-2">
+                    <p id="modal-content" class="text-sm text-gray-500 leading-relaxed">
+                        You are about to permanently delete your UniVault account. This action is irreversible and will result in the loss of all academic data, scores, and history.
+                    </p>
+                </div>
+            </div>
+            <div class="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
+                <button type="button" id="confirmButton" onclick="handleDeletionConfirmation()" class="w-full inline-flex justify-center rounded-lg border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:col-start-2 sm:text-sm">
+                    Yes, Delete Permanently
+                </button>
+                <button type="button" onclick="hideConfirmationModal()" class="mt-3 w-full inline-flex justify-center rounded-lg border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:col-start-1 sm:text-sm">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Custom Floating Notification (Snackbar) -->
+    <div id="snackbar" class="fixed bottom-4 right-4 p-4 rounded-lg text-white shadow-xl max-w-xs z-50 transition duration-300 ease-in-out" role="alert">
+        <p id="snackbar-message" class="font-medium"></p>
+    </div>
+
+    <script>
+        const deleteForm = document.getElementById('deleteForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const customReasonBox = document.getElementById('custom-reason-box');
+        const usernameHint = document.getElementById('username-hint');
+        const reasonSelect = document.getElementById('reason');
+        const customReasonInput = document.getElementById('custom-reason');
+        const modal = document.getElementById('confirmationModal');
+        const snackbar = document.getElementById('snackbar');
+        const snackbarMessage = document.getElementById('snackbar-message');
+
+        /**
+         * Shows a temporary floating notification (snackbar).
+         * @param {string} message The message to display.
+         * @param {string} type 'error' or 'success' (changes color).
+         */
+        function showNotification(message, type = 'error') {
+            // Reset classes
+            snackbar.className = 'fixed bottom-4 right-4 p-4 rounded-lg text-white shadow-xl max-w-xs z-50 transition duration-300 ease-in-out';
+            
+            if (type === 'error') {
+                snackbar.classList.add('bg-red-500');
+            } else if (type === 'success') {
+                snackbar.classList.add('bg-green-600');
+            } else if (type === 'info') {
+                snackbar.classList.add('bg-indigo-600');
+            }
+
+            snackbarMessage.textContent = message;
+            snackbar.classList.add('show');
+
+            // Hide after 3 seconds
+            setTimeout(() => {
+                snackbar.classList.remove('show');
+            }, 3000);
+        }
+
+        // Helper function to show/hide the custom reason box
+        function checkReason() {
+            if (reasonSelect.value === 'other') {
+                customReasonBox.classList.remove('hidden');
+            } else {
+                customReasonBox.classList.add('hidden');
+                customReasonInput.value = ''; // Clear custom input if switching away
+            }
+        }
+
+        // Student ID Validation
+        function validateStudentData() {
+            const username = document.getElementById("username").value.trim();
+            // Example Pattern: Starts with 192, followed by 6 digits (total 9 characters)
+            const studentIdPattern = /^192\d{6}$/; 
+            if (username && !studentIdPattern.test(username)) {
+                usernameHint.classList.remove('hidden');
+                return false;
+            } else {
+                usernameHint.classList.add('hidden');
+                return true;
+            }
+        }
+
+        // --- MODAL FUNCTIONS (Replaces JS confirm()) ---
+        
+        function showConfirmationModal() {
+            // Apply Tailwind classes for visibility and transition
+            modal.classList.remove('pointer-events-none', 'opacity-0');
+            modal.classList.add('opacity-100');
+            modal.querySelector('div:first-child').classList.remove('translate-y-4');
+        }
+
+        function hideConfirmationModal() {
+            // Apply Tailwind classes for hiding and transition
+            modal.classList.remove('opacity-100');
+            modal.classList.add('opacity-0');
+            modal.querySelector('div:first-child').classList.add('translate-y-4');
+            // Delay adding pointer-events-none to allow transition to finish
+            setTimeout(() => {
+                modal.classList.add('pointer-events-none');
+            }, 300); 
+        }
+
+        function handleDeletionConfirmation() {
+            hideConfirmationModal();
+            // Disable the button and show processing status
+            submitBtn.disabled = true;
+            submitBtn.textContent = "Processing Deletion Request...";
+            
+            // Simulate API call delay for professional feedback
+            setTimeout(() => {
+                console.log("Account deletion verified and processing for: " + document.getElementById("username").value);
+
+                // For demo purposes, we change the UI to a success state
+                deleteForm.innerHTML = `
+                    <div class="p-6 bg-green-50 border border-green-300 rounded-lg text-center">
+                        <h3 class="text-xl font-bold text-green-700 mb-2">Deletion Request Acknowledged</h3>
+                        <p class="text-gray-600">
+                            Your UniVault account deletion process has been initiated successfully. All data will be permanently removed in 24 hours. You will be logged out shortly.
+                        </p>
+                    </div>
+                `;
+                showNotification("Account deletion request submitted.", 'success');
+
+            }, 2000); // 2 second delay
+        }
+
+        function validateAndShowModal(event) {
+            event.preventDefault();
+
+            // 1. Basic field validation
+            const username = document.getElementById("username").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value.trim();
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+            if (!username || !email || !password) {
+                showNotification("Please fill in all required fields (Student ID, Email, Password).", 'error'); 
+                return;
+            }
+
+            if (!emailRegex.test(email)) {
+                showNotification("Please enter a valid university email address.", 'error');
+                return;
+            }
+            
+            // 2. Student ID Format validation
+            if (!validateStudentData()) {
+                 showNotification("Please correct the Student ID format before proceeding.", 'error');
+                 return;
+            }
+
+            // 3. Custom reason validation
+            if (reasonSelect.value === "other" && !customReasonInput.value.trim()) {
+                 showNotification("Please specify your reason for account deletion.", 'error');
+                 return;
+            }
+
+            // If all validation passes, show the custom confirmation modal
+            showConfirmationModal();
+        }
+
+        // Initial setup on load
+        window.onload = function() {
+            checkReason(); // Hide custom reason on load
+        }
+    </script>
+</body>
+</html>
